@@ -1,5 +1,6 @@
 /* 
-*   Project -- Tic Tac Toe
+*   [INSTRUCTOR COPY]
+*   Project -- Tic Tac Toe 
 
     ? Learning Objectives
     1. Piece everything you've learnt so far!
@@ -16,27 +17,36 @@
 // Hint: If the cell corresponding to the input does not already have an 'X' or 'O', assign 'O' to the corresponding cell.
 //       Else, prompt the user for a valid command again
 void generatePlayerAction(char cell[9]){
-
-    // Currently we request for just one number without any checks.
     int input = 0;
     std::cout << "Choose a valid number [0-8] ";
     std::cin >> input;
 
-    // Fill in additional logics below
-
-
-
-
+    while(cell[input] == 'X' || cell[input] == 'O'){
+        std::cout << "Choose a valid number [0-8] ";
+        std::cin >> input;
+    }
+    cell[input] = 'O';
 }
 
 // TODO2: Complete this function
 // Hint: Return True if 3-in-a-row is formed. Otherwise, return false.
 bool checkVictory(char cell[9]) {
 
+    // Check 3-in-a-row or 3-in-a-column
+    for (int i = 0; i < 3; i++){
+        if ((cell[i*3] == cell[i*3+1] && cell[i*3+1] == cell[i*3+2]) || // Check each row
+            (cell[i] == cell[i + 3] && cell[i + 3] == cell[i + 6]))     // Check each column
+        {
+            return true;
+        }
+    }
 
-    
-
-
+    // Check diagonals
+    if ((cell[0] == cell[4] && cell[4] == cell[8]) ||  
+        (cell[2] == cell[4] && cell[4] == cell[6])) 
+    {
+        return true;
+    }
 
     return false; // If none of the above was true, means no 3-in-a-row yet. Return false.
 }
@@ -45,12 +55,14 @@ bool checkVictory(char cell[9]) {
 // Hint: Return True if all the cells have been filled. Otherwise, return false.
 //       If at least one cell doesn't contain either 'X' or 'O', it means that the board is not completely filled.
 bool checkBoardFilled(char cell[9]) {
-    
-    
+    for (int i = 0; i < 9; i++) {
+        if (cell[i] != 'X' && cell[i] != 'O') {
+            return false;
+        }
+    }
 
-
-
-    return false;
+    // If none of the cell is holding onto a 'digit', means all grids are filled.
+    return true;
 }
 
 // TODO4: Complete this function
@@ -58,11 +70,11 @@ bool checkBoardFilled(char cell[9]) {
 //       While the input is not valid, keep generating a random number. 
 //       Once the valid random number is found, assign 'X' to the cell.
 void generateOpponentAction(char cell[9]){
-
-
-
-
-
+    int opponentInput = 0;
+    while(cell[opponentInput] == 'X' || cell[opponentInput] == 'O'){
+        opponentInput = rand() % 9;
+    }
+    cell[opponentInput] = 'X';
 }
 
 void printMap(char cell[9]){
