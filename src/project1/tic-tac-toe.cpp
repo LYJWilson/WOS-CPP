@@ -135,6 +135,4 @@ void main() {
             break;
         }
     }
-
-    std::cin >> cell[0]; 
 }
