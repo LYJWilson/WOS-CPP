@@ -18,11 +18,11 @@ Skeleton code for game projects are designed for the motivated students to apply
 - Project 1 - Tic Tac Toe Game
 - Project 2 - Snake Game
 ><p float="left">
-><img src="https://github.com/LYJWilson/WOS-CPP/blob/master/src/docs/media/tic-tac-toe.png" height="250">
+><img src="https://github.com/LYJWilson/WOS-CPP/blob/master/src/docs/media/tic-tac-toe.gif" height="250">
 ><img src="https://github.com/LYJWilson/WOS-CPP/blob/master/src/docs/media/snake.gif" height="250">
 ></p>
 
-## Installation 
+## Installation 📀
 1. Clone this repository
    
    ```
@@ -43,6 +43,6 @@ Skeleton code for game projects are designed for the motivated students to apply
    ./module1/Release/ex1-1
    ```
    
-## Environment
+## Environment 💻
 - CMake
 - Visual Studio Code [Extension: Better Comments]

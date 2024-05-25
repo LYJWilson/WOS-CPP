@@ -93,6 +93,7 @@ void main() {
         generatePlayerAction(cell);             // TODO1: Complete this function
         
         //* Step 2 -- Update the map with player's action
+        std::cout << "\nYour Move: \n";
         printMap(cell);
 
         //* Step 3 -- Check if player has won
@@ -113,6 +114,7 @@ void main() {
         generateOpponentAction(cell);           // TODO4: Complete this function
 
         //* Step 6 -- Update the map with opponent's action
+        std::cout << "Opponent's Move: \n";
         printMap(cell);
         
         //* Step 7 -- Check if opponent has won
