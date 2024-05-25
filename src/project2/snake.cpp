@@ -27,7 +27,7 @@
     #define TIMESTEP 100       // Initialize timestep in milliseconds
 #endif
 
-#define ADVANCED 0             // Toggle ADVANCED mode (0 for default, 1 for More Challenges)
+#define ADVANCED 1             // Toggle ADVANCED mode (0 for default, 1 for More Challenges)
 
 /**
  * Print map on console screen row-by-row.
@@ -71,7 +71,7 @@ void render(int map[H][W], int posHead[2]) {
 
     /* Last row */
     for (int j = 0; j < W + 2; j++) std::cout << "# "; // Print bottom wall
-    std::cout << "Length = "<< map[posHead[0]][posHead[1]];
+    std::cout << "\nLength = "<< map[posHead[0]][posHead[1]];
     std::cout << "\n"; // line break;
 }
 
