@@ -70,7 +70,7 @@ bool checkBoardFilled(char cell[9]) {
 //       While the input is not valid, keep generating a random number. 
 //       Once the valid random number is found, assign 'X' to the cell.
 void generateOpponentAction(char cell[9]){
-    int opponentInput = 0;
+    int opponentInput = rand() % 9;
     while(cell[opponentInput] == 'X' || cell[opponentInput] == 'O'){
         opponentInput = rand() % 9;
     }
@@ -105,11 +105,12 @@ void main() {
         generatePlayerAction(cell);             // TODO1: Complete this function
         
         //* Step 2 -- Update the map with player's action
+        std::cout << "\nYour Move: \n";
         printMap(cell);
 
         //* Step 3 -- Check if player has won
         if (checkVictory(cell)) {               // TODO2: Complete this function
-            std::cout << "Player has won \n";
+            std::cout << "Player has won";
             break;
         }
 
@@ -125,6 +126,7 @@ void main() {
         generateOpponentAction(cell);           // TODO4: Complete this function
 
         //* Step 6 -- Update the map with opponent's action
+        std::cout << "Opponent's Move: \n";
         printMap(cell);
         
         //* Step 7 -- Check if opponent has won
@@ -133,4 +135,6 @@ void main() {
             break;
         }
     }
+
+    std::cin >> cell[0]; 
 }
