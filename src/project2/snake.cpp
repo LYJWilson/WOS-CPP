@@ -27,6 +27,8 @@
     #define TIMESTEP 100       // Initialize timestep in milliseconds
 #endif
 
+#define ADVANCED 0             // Toggle ADVANCED mode (0 for default, 1 for More Challenges)
+
 /**
  * Print map on console screen row-by-row.
  * 
@@ -47,7 +49,7 @@ void render(int map[H][W], int posHead[2]) {
         
         for (int j = 0; j < W; j++) {
 
-            std::cout << map[i][j] << " "; // Print number map. Comment this out if printing the appropriate characters instead.
+            // std::cout << map[i][j] << " "; // Print number map. Comment this out if printing the appropriate characters instead.
             
             // TODO1: Instead of printing the number map above, convert the numbers and print the appropriate characters (approx ~5 lines of code)
             // 0: Empty square ' '
@@ -55,7 +57,12 @@ void render(int map[H][W], int posHead[2]) {
             // +ve (but not snake head): '*'
             // +ve (snake head): '@'
             // Remember to comment out the above number map
-
+            if (map[i][j] == 0) std::cout << "  ";
+            else if (map[i][j] == -1) std::cout << "$ ";
+            else if (map[i][j] == -2) std::cout << "X ";
+            else if (map[i][j] == -9) std::cout << "# ";
+            else if (i == posHead[0] && j == posHead[1]) std::cout << "@ "; // Print head position differently
+            else std::cout << "* ";
 
         }
 
@@ -77,7 +84,10 @@ void render(int map[H][W], int posHead[2]) {
  */
 void updateHeadPosition(int posHead[2], int dir) {
     // TODO2: Update position of head based on the value of dir  (~4 lines of code)
-
+    if (dir == 0) posHead[0] -= 1;
+    else if (dir == 1) posHead[0] += 1;
+    else if (dir == 2) posHead[1] -= 1;
+    else if (dir == 3) posHead[1] += 1;
 }
 
 /**
@@ -89,7 +99,7 @@ void updateHeadPosition(int posHead[2], int dir) {
  */
 void extendSnake(int map[H][W], int posHeadNew[2], int length) {
     // TODO3: Assign the value of length + 1 to the position of the new head  (~1-3 line of code)
-
+    map[posHeadNew[0]][posHeadNew[1]] = length + 1;
 
 }
 
@@ -101,8 +111,13 @@ void extendSnake(int map[H][W], int posHeadNew[2], int length) {
  */
 void reduceSnake(int map[H][W]) {
     // TODO4: Minus one from all +ve squares in the map (~5 lines of code)
-
-
+    for (int i = 0; i < H; i++) {
+        for (int j = 0; j < W; j++) {
+            if (map[i][j] > 0) {
+                map[i][j] -= 1;
+            }
+        }
+    }
 }
 
 /**
@@ -116,8 +131,35 @@ void generateFood(int map[H][W], int posFood[2])
 {
     // TODO5: Generate a random XY coordinate for food within the map (~5 lines of code)
     // You should keep generating a XY coordinate until you get a valid solution (i.e. food should only appear on empty square)
+    do
+    {
+        posFood[0] = rand() % H;
+        posFood[1] = rand() % W;
+    } while (map[posFood[0]][posFood[1]] != 0);
 
+    // Modify map with food's position and value
+    map[posFood[0]][posFood[1]] = -1;
+}
 
+// TODO (ADVANCED)
+/**
+ * Generate random XY coordinates for poison on an empty square on the map.
+ *
+ * @param  map      - integer array containing information of empty squares, snake and food positions.
+ * @param  posPoison  - coordinates of poison position
+ * @return void
+ */
+void generatePoison(int map[H][W], int posPoison[2])
+{
+    // Generate a random XY coordinate for poison
+    do
+    {
+        posPoison[0] = rand() % H;
+        posPoison[1] = rand() % W;
+    } while (map[posPoison[0]][posPoison[1]] != 0);
+
+    // Modify map with poisons's position and value
+    map[posPoison[0]][posPoison[1]] = -2;
 }
 
 /**
@@ -129,8 +171,20 @@ void generateFood(int map[H][W], int posFood[2])
  */
 bool isCollisionFood(int posHead[2], int posFood[2]) {
     // TODO6: Return true if collision has occured (~1-3 line of code)
-
+    return (posHead[0] == posFood[0] && posHead[1] == posFood[1]);
     return false; 
+}
+
+// TODO (ADVANCED)
+/**
+ * Check if snake head and obstacle has collided.
+ *
+ * @param  map      - integer array containing information of empty squares, snake and food positions.
+   @param  posHead  - coordinates of snake's head position
+ * @return bool     - True if both X and Y coordinates of head reaches a -9 square.
+ */
+bool isCollisionObstacle(int map[H][W], int posHead[2]) {
+    return (map[posHead[0]][posHead[1]] == -9);
 }
 
 /**
@@ -139,16 +193,35 @@ bool isCollisionFood(int posHead[2], int posFood[2]) {
  * @param  map      - integer array containing information of empty squares, snake and food positions.
    @param  posHead  - coordinates of snake's head position
    @param  posFood  - coordinates of food's position
+   @param  posPoison- coordinates of poision's position (Advanced)
    @param  length   - current length of snake
  * @return void
  */
-void update(int map[H][W], int posHead[2], int posFood[2], int length) {
+void update(int map[H][W], int posHead[2], int posFood[2], int posPoison[2], int length) {
 
     // TODO7: Check if food has been 'eaten' by the snake. (~8 lines of code)
-    if (false) {
+    if (isCollisionFood(posHead, posFood)) {
 
         // TODO7: If food is eaten, call the (completed) functions to extend snake and regenerate food
+        extendSnake(map, posHead, length);
+        generateFood(map, posFood);
 
+        if (ADVANCED){
+	        map[posPoison[0]][posPoison[1]] = 0;
+        	generatePoison(map, posPoison);
+        }
+    }
+
+    else if (ADVANCED && isCollisionFood(posHead, posPoison)) {
+        extendSnake(map, posHead, length);
+        reduceSnake(map);
+        generatePoison(map, posPoison);
+        for (int i = 0; i < length / 2; i++) reduceSnake(map);
+
+        if (ADVANCED){
+	        map[posFood[0]][posFood[1]] = 0;
+	        generateFood(map, posFood);
+	    }
     }
 
     else {
@@ -167,8 +240,7 @@ void update(int map[H][W], int posHead[2], int posFood[2], int length) {
  */
 bool isCollisionWall(int posHead[2]) {
     // TODO8: Return true if collision has occured (~1-3 line of code)
-
-    return false;
+     return (posHead[0] < 0 || posHead[0] >= H || posHead[1] < 0 || posHead[1] >= W);
 }
 
 /**
@@ -180,8 +252,7 @@ bool isCollisionWall(int posHead[2]) {
  */
 bool isCollisionSelf(int map[H][W], int posHead[2]) {
     // TODO8: Return true if collision has occured (~1-3 line of code)
-
-    return false;
+    return (map[posHead[0]][posHead[1]] > 0);
 }
 
 /**
@@ -209,9 +280,21 @@ int main() {
     int length = 3;              // Current length of snake
     int posHead[2] = { 0, 4 };   // Current position of snake's head
     int posFood[2] = { 0, 0 };   // Current position of food
+    int posPoison[2] = { 0, 0 }; // Current position of poison (Advanced)
 
     // Initialize snake and food position on map
     initializeSnake(map, posHead, length);
+
+    // Obstacles (Advanced)
+    if (ADVANCED){
+        for (int i = 8; i < 12; i++) {
+            for (int j = 8; j < 12; j++) {
+                map[i][j] = -9;
+            }
+       }
+       generatePoison(map, posPoison);
+    }
+
     generateFood(map, posFood);
 
     while (1) {
@@ -232,13 +315,21 @@ int main() {
 
         // TODO9: Check for collisions with walls and body.
         // If collision has occured, print "Game Over" and exit while loop.  (~3 lines of code)
-        if (true)
+        if (isCollisionWall(posHead) || isCollisionSelf(map, posHead) || isCollisionObstacle(map, posHead)) 
         {
-
+            if (ADVANCED && isCollisionWall(posHead)) { // Wrap around wall (Advanced)
+                posHead[0] = (posHead[0] + H) % H;
+                posHead[1] = (posHead[1] + W) % W;
+            }
+            
+            else {
+                printf("Game over");
+                break;
+            }
         }
 
         // Update map
-        update(map, posHead, posFood, length);
+        update(map, posHead, posFood, posPoison, length);
 
         // Update length of snake and previous cycle timestamp
         length = map[posHead[0]][posHead[1]];
