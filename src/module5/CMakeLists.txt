@@ -1,4 +1,4 @@
-add_executable(ex1 ex1.cpp)
-add_executable(ex2 ex2.cpp)
-add_executable(ex3 ex3.cpp)
-add_executable(test test.cpp)
+add_executable(ex5-1 ex1.cpp)
+add_executable(ex5-2 ex2.cpp)
+add_executable(ex5-3 ex3.cpp)
+add_executable(test5 test.cpp)
