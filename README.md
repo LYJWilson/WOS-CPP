@@ -8,7 +8,7 @@ Skeleton code for game projects are designed for the motivated students to apply
 
 ## Modules 📖
 - Module 1 - IO functions  
-- Module 2 - Arthimetics  
+- Module 2 - Arithmetic  
 - Module 3 - Logics  
 - Module 4 - Loops  
 - Module 5 - Functions  
