@@ -39,6 +39,12 @@ Skeleton code for game projects are designed for the motivated students to apply
    ```
 3. Run the programs
    
+   Linux
+   ```
+   ./module1/ex1-1
+   ```
+
+   Windows
    ```
    ./module1/Release/ex1-1
    ```

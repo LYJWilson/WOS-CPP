@@ -20,13 +20,14 @@
                     // iostream contains standard console input/output functions, such as print statements
 
 /* a. Function named 'main'. By default, the 'main' function is the starting point of every C++ program.
-   b. The term preceeding the function name specifies the return type. In this case, 'void' informs the compiler that no return variable is expected.
+   b. The term preceeding the function name specifies the return type. 
+      In this case, 'int' informs the compiler that an integer type return variable is expected.
    c. The terms in the brackets () following the function name are known as arguments.
        In this case, there are no additional function arguments specified in this function.
    d. All function statements are nested within the curly braces {}
    e. All function statements must end with a semi-colon ;
 */
-void main() { 
+int main() { 
 
     // TODO START
     // TODO1: Create an character input to store the user's school name into the variable 'schoolname'. (~1 LOCs)
@@ -43,4 +44,6 @@ void main() {
 
 
     // TODO END
+
+    return 0; // 0 denotes no error
 }   

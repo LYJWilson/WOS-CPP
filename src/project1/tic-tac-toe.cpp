@@ -77,7 +77,7 @@ void printMap(char cell[9]){
     std::cout << "\n";
 }
 
-void main() {
+int main() {
 
     srand(time(0));
     
@@ -123,4 +123,6 @@ void main() {
             break;
         }
     }
+
+    return 0;
 }

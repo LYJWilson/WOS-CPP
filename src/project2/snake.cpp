@@ -245,5 +245,5 @@ int main() {
         prevTime = clock();
     }
 
-    return 1;
+    return 0;
 }
