@@ -33,7 +33,7 @@ int main() {
     }
     std::cout << "\n";
     
-    //* This code demonstrates the use of continue and while
+    //* This code demonstrates the use of continue and break
     int sum2 = 0;
     int j = 0;
     for (j = 0; j < 20; j+=2) { // For a 'int' variable, j, starting from 0, increment j by 2 for as long as j < 20.
@@ -46,7 +46,7 @@ int main() {
             break;
         }
 
-        sum2 += j;                    // This is equivalent to sum2 = sum2 + i
+        sum2 += j;                    // This is equivalent to sum2 = sum2 + j
         std::cout << "At j = " << j << ", Sum2 = " << sum2 << "\n";
     }
 
